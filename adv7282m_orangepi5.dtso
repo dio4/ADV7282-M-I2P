@@ -1,0 +1,38 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "rockchip,rk3588s-orangepi-5";
+
+    fragment@0 {
+        target = <&i2c3>;
+        __overlay__ {
+            adv7282m: adv7282m@21 {
+                compatible = "adi,adv7282-m";
+                reg = <0x0 0x21>; // Исправлено для 2-байтового адреса (rk3588s)
+                status = "okay";
+                // reset-gpios = <&gpioX Y GPIO_ACTIVE_LOW>; // если используется
+                // powerdown-gpios = <&gpioX Z GPIO_ACTIVE_LOW>; // если используется
+                port {
+                    adv7282m_to_csi: endpoint {
+                        remote-endpoint = <&csi2_in>;
+                        bus-type = <4>; // MIPI CSI-2
+                    };
+                };
+            };
+        };
+    };
+
+    fragment@1 {
+        target = <&mipi_csi2>;
+        __overlay__ {
+            status = "okay";
+            port {
+                csi2_in: endpoint {
+                    remote-endpoint = <&adv7282m_to_csi>;
+                    // data-lanes = <1>; // если требуется
+                };
+            };
+        };
+    };
+};
