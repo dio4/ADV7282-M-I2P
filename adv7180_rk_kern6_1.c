@@ -1434,5 +1434,5 @@ static struct i2c_driver adv7180_driver = {
 module_i2c_driver(adv7180_driver);
 
 MODULE_DESCRIPTION("Analog Devices ADV7180 video decoder driver");
-MODULE_AUTHOR("Mocean Laboratories");
+MODULE_AUTHOR("Derevianko A.V.");
 MODULE_LICENSE("GPL v2");
